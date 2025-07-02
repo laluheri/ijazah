@@ -20,5 +20,5 @@ Route::post('/upload', [PDFController::class, 'upload']);
 
 Route::get('/generate-key', function () {
     Artisan::call('key:generate');
-    return 'APP_KEY generated!';
+    return 'APP_KEY generated!!';
 });
