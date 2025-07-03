@@ -10,10 +10,18 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
+
 RUN chmod -R 775 storage bootstrap/cache
+
 RUN a2enmod rewrite
 
-# Allow Laravel serve public/
+# Tambahkan langkah cache config Laravel
+RUN php artisan config:cache
+
+# Opsional: Buat symbolic link untuk storage
+RUN php artisan storage:link || true
+
+# Apache config agar public bisa diakses
 RUN echo "<Directory /var/www/html/public>\n\
     AllowOverride All\n\
     Require all granted\n\
